@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     public function userSignIn(Request $request):JsonResponse{
-        //Log::info('i am working');
-        Log::info($request->email);
+        Log::info('i am working');
+        //Log::info($request->email);
         $user  = User::where('email',$request->email)->first();
 
         if(!$user){
@@ -24,7 +24,7 @@ class UserController extends Controller
         if($this->isValidateUserCredentials($request->all(), $user)){
 
             return response()->json([
-                        'message' => 'User found',
+                        'user_id' => $user->id,
                         'user_token' => $user->createToken('testToken', ['server:admin'])->plainTextToken,
 
                 ]);
